@@ -1,5 +1,22 @@
-# Hello World Example
+# freeRTOS taskCreate Example
 
-Starts a FreeRTOS task to print "Hello World"
+Starts 2 FreeRTOS tasks to print "Task 1/2 is running"
 
-See the README.md file in the upper level 'examples' directory for more information about examples.
+
+terminal print:
+
+Hello world!
+This is ESP32 chip with 2 CPU cores, WiFi/BT/BLE, silicon revision 0, 4MB external flash
+Task 1 is running
+
+Task 2 is running
+
+Task 2 is running
+
+Task 2 is running
+
+Task 1 is running
+
+Task 2 is running
+
+Task 2 is running
