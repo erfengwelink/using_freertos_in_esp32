@@ -16,6 +16,7 @@
 
 const char *pcTextForTask1 = "Task 1 is running\n";
 const char *pcTextForTask2 = "Task 2 is running\n";
+const char *pcTextForPeriodicTask = "Periodic task is running\n";
 
 void vContinuousProcessingTask( void *pvParameters )
 {
@@ -31,16 +32,16 @@ char *pcTaskName;
 	{
 		/* Print out the name of this task. */
 		printf("%s\n", pcTaskName );
-
+		//vTaskDelay(25 / portTICK_RATE_MS);
 		/* A null loop has been inserted just to slow down the rate at which
 		messages are sent down the debug link to the console.  Without this
 		messages print out too quickly for the debugger display and controls
 		to keep up.  For clarity this null loop is not shown in the eBook text
 		as it is not relevant to the behaviour being demonstrated. */
-//		for( ul = 0; ul < 0xfff; ul++ )
-//		{
-//			__nop();
-//		}
+		// for( ul = 0; ul < 0xfff; ul++ )
+		// {
+		// 	__nop();
+		// }
 	}
 }
 
@@ -48,7 +49,7 @@ void vPeriodicTask( void *pvParameters )
 {
 //char *pcTaskName;
 //volatile unsigned long ul;
-
+portTickType xLastWakeTime;
 	/* The string to print out is passed in via the parameter.  Cast this to a
 	character pointer. */
 	//pcTaskName = ( char * ) pvParameters;
@@ -63,7 +64,7 @@ void vPeriodicTask( void *pvParameters )
 	for( ;; )
 	{
 		/* Print out the name of this task. */
-		printf("%s:Periodic task is running..........\n", __func__, );
+		printf("%s:Periodic task is running..........\n", __func__ );
 
 #if 0
 		/* Delay for a period. */
@@ -97,12 +98,12 @@ void app_main()
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded\n" : "external\n");
 
     /* Create two instances of the continuous processing task, both at priority	1. */
-	xTaskCreate( vContinuousProcessingTask, "Task 1", 240, (void*)pcTextForTask1, 1, NULL );
-	xTaskCreate( vContinuousProcessingTask, "Task 2", 240, (void*)pcTextForTask2, 1, NULL );
+	xTaskCreate( vContinuousProcessingTask, "Task 1", 1024, (void*)pcTextForTask1, 1, NULL );
+	xTaskCreate( vContinuousProcessingTask, "Task 2", 1024, (void*)pcTextForTask2, 1, NULL );
 
 	/* Create one instance of the periodic task at priority 2. */
-	xTaskCreate( vPeriodicTask, "Task 3", 240, (void*)pcTextForPeriodicTask, 2, NULL );
+	xTaskCreate( vPeriodicTask, "Task 3", 8*1024, (void*)pcTextForPeriodicTask, 2, NULL );
 
-	printf(""fished\n" );
+	printf("fished\n" );
 
 }
